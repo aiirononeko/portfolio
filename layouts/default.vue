@@ -38,11 +38,18 @@ body {
   text-align: center;
 }
 
+.title {
+  font-weight: 300;
+  font-size: 6rem;
+  color: #708090;
+  letter-spacing: 5px;
+}
+
 .footer {
   min-height: 10vh;
   font-size: 2rem;
   float: right;
-  margin: auto 20%;
+  margin: auto 10%;
   color: #708090;
 }
 </style>
