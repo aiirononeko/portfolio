@@ -1,28 +1,28 @@
 <template>
-  <div class="container">
-    <h1 class="title">Welcome to my Portfolio!</h1>
+  <div>
+    <div class="container">
+      <h1 class="title">Welcome to my Portfolio!</h1>
+    </div>
+    <Footer class="footer" />
   </div>
 </template>
 
 <script>
-export default {}
+import Footer from '@/components/Footer'
+
+export default {
+  components: {
+    Footer
+  }
+}
 </script>
 
 <style>
-.container {
-  margin: 0 auto;
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-}
-
 .title {
   display: block;
   font-weight: 300;
   font-size: 100px;
-  color: #35495e;
+  color: #708090;
   letter-spacing: 5px;
 }
 
