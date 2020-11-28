@@ -7,6 +7,7 @@
 <style>
 html {
   font-family:
+    'Bodoni 72 Smallcaps',
     'Source Sans Pro',
     -apple-system,
     BlinkMacSystemFont,
