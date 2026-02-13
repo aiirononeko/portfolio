@@ -261,6 +261,42 @@ function animate() {
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════
+// THEME TOGGLE
+// ═══════════════════════════════════════════════════════════════════════════════
+
+let isDarkMode = false;
+
+function applyTheme() {
+    const themeToggle = document.getElementById('theme-toggle');
+    if (!themeToggle) return;
+
+    if (isDarkMode) {
+        document.body.classList.add('dark-mode');
+        themeToggle.textContent = 'LIGHT';
+        themeToggle.classList.add('active');
+    } else {
+        document.body.classList.remove('dark-mode');
+        themeToggle.textContent = 'DARK';
+        themeToggle.classList.remove('active');
+    }
+}
+
+// Initialize theme from localStorage
+const savedTheme = localStorage.getItem('portfolio-theme');
+isDarkMode = savedTheme === 'dark';
+applyTheme();
+
+// Theme toggle event listener
+const themeToggle = document.getElementById('theme-toggle');
+if (themeToggle) {
+    themeToggle.addEventListener('click', () => {
+        isDarkMode = !isDarkMode;
+        localStorage.setItem('portfolio-theme', isDarkMode ? 'dark' : 'light');
+        applyTheme();
+    });
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
 // INIT
 // ═══════════════════════════════════════════════════════════════════════════════
 
