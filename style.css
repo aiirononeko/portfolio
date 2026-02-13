@@ -641,63 +641,74 @@ body.dark-mode .panel:hover {
     }
 
     .ph {
-        font-size: 11px;
+        font-size: 16px;
     }
 
     .pc {
-        font-size: 13px;
+        font-size: 15px;
     }
 
     .exp-label {
-        font-size: 14px;
+        font-size: 22px;
         letter-spacing: 3px;
     }
 
     .exp-type {
-        font-size: 12px;
+        font-size: 14px;
     }
 
     .ef-credit {
-        font-size: 12px;
+        font-size: 13px;
     }
 
     .skill-name {
         min-width: 50px;
-        font-size: 11px;
+        font-size: 14px;
     }
 
     .career-year {
-        font-size: 11px;
+        font-size: 14px;
     }
 
     .career-role {
-        font-size: 12px;
+        font-size: 14px;
     }
 
     .career-company {
-        font-size: 11px;
+        font-size: 13px;
     }
 
     .project-name {
-        font-size: 11px;
+        font-size: 14px;
     }
 
     .project-desc {
-        font-size: 11px;
+        font-size: 13px;
     }
 
     .project-tech {
-        font-size: 10px;
+        font-size: 11px;
     }
 
     .link-label {
-        font-size: 12px;
+        font-size: 14px;
     }
 
     #theme-toggle,
     #blog-btn {
-        font-size: 10px;
-        padding: 6px 16px;
+        font-size: 12px;
+        padding: 8px 18px;
+    }
+}
+
+@keyframes fadeSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-8px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
     }
 }
 
@@ -740,22 +751,88 @@ body.dark-mode .panel:hover {
         display: none;
     }
 
+    /* --- Sidebars: use display:contents so children flow into grid --- */
     #sidebar-l,
     #sidebar-r {
         position: static;
         width: 100%;
-        padding: 0 16px;
-        gap: 8px;
+        display: contents;
     }
 
+    /* --- Mobile content: 2-column grid for CAREER & PROJECTS --- */
     .mobile-content {
-        display: flex;
-        flex-direction: column;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
         gap: 8px;
-        padding: 12px 0;
+        padding: 12px 8px;
     }
 
-    .panel {
+    /* --- Floating panels common --- */
+    #sidebar-l .panel:first-child,
+    #sidebar-r .panel:last-child {
+        position: fixed;
+        z-index: 10;
+        width: auto;
+        min-width: 100px;
+        max-width: 160px;
+        padding: 10px;
+        background: rgba(255, 255, 255, 0.7);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+        animation: fadeSlideIn 0.4s ease-out backwards;
+    }
+
+    /* SKILLS - right side */
+    #sidebar-l .panel:first-child {
+        right: 8px;
+        top: 56px;
+    }
+
+    /* LINKS - left side */
+    #sidebar-r .panel:last-child {
+        left: 8px;
+        top: 56px;
+    }
+
+    /* --- SKILLS panel compact --- */
+    #sidebar-l .panel:first-child .ph {
+        font-size: 13px;
+        margin-bottom: 6px;
+    }
+    #sidebar-l .panel:first-child .skill-bar { display: none; }
+    #sidebar-l .panel:first-child .skill-name {
+        font-size: 13px;
+        min-width: unset;
+        padding: 3px 0;
+    }
+    #sidebar-l .panel:first-child .skill-row {
+        margin-bottom: 2px;
+    }
+    /* Hide 6th skill and beyond */
+    #sidebar-l .panel:first-child .skill-row:nth-child(n+6) { display: none; }
+
+    /* --- LINKS panel compact --- */
+    #sidebar-r .panel:last-child .ph {
+        font-size: 13px;
+        margin-bottom: 6px;
+    }
+    #sidebar-r .panel:last-child .link-arrow { display: none; }
+    #sidebar-r .panel:last-child .link-icon {
+        font-size: 14px;
+        padding: 2px;
+    }
+    #sidebar-r .panel:last-child .link-label {
+        font-size: 13px;
+    }
+    #sidebar-r .panel:last-child .link-row {
+        min-height: 36px;
+        padding: 2px 0;
+    }
+
+    /* --- Non-floating panels (CAREER & PROJECTS) --- */
+    #sidebar-l .panel:last-child,
+    #sidebar-r .panel:first-child {
         padding: 12px 14px;
     }
 
@@ -820,7 +897,7 @@ body.dark-mode .panel:hover {
     }
 
     .exp-label {
-        font-size: 14px;
+        font-size: 18px;
         letter-spacing: 2px;
     }
 
@@ -831,5 +908,25 @@ body.dark-mode .panel:hover {
 
     .exp-right {
         gap: 6px;
+    }
+
+    /* --- Dark mode for floating panels --- */
+    body.dark-mode #sidebar-l .panel:first-child,
+    body.dark-mode #sidebar-r .panel:last-child {
+        background: rgba(26, 26, 26, 0.7);
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+    }
+}
+
+/* --- Extra small screens --- */
+@media (max-width: 480px) {
+    #sidebar-l .panel:first-child,
+    #sidebar-r .panel:last-child {
+        max-width: 120px;
+        padding: 8px;
+    }
+
+    .mobile-content {
+        grid-template-columns: 1fr;
     }
 }
