@@ -110,7 +110,10 @@ function loadModel(modelPath: string = '/gba.glb') {
             const center = box.getCenter(new THREE.Vector3());
 
             model.position.sub(center);
-            model.rotation.y = -Math.PI / 2;
+            // GBA model needs -90° rotation, GBC faces camera directly
+            if (currentModelPath === '/gba.glb') {
+                model.rotation.y = -Math.PI / 2;
+            }
             model.position.y += 0.05;
 
             const size = new THREE.Box3().setFromObject(model).getSize(new THREE.Vector3());

@@ -301,17 +301,17 @@ function buildGBC(): Document {
 
   // Power switch
   root.addChild(addMesh('power_switch',
-    createBoxGeometry(0.08, 0.04, 0.06), matDpad, [-W * 0.28, H * 0.885, 0]));
+    createBoxGeometry(0.08, 0.04, 0.06), matDpad, [-W * 0.28, H * 0.5, 0]));
 
   // IR port
   root.addChild(addMesh('ir_port',
-    createBoxGeometry(0.06, 0.02, 0.04), matIr, [0, H * 0.885, 0]));
+    createBoxGeometry(0.06, 0.02, 0.04), matIr, [0, H * 0.5, 0]));
 
   // ─── Bottom edge ──────────────────────────────────────────────────────────
 
   // Link cable port
   root.addChild(addMesh('link_port',
-    createBoxGeometry(0.12, 0.02, 0.08), matDpad, [0, -H * 0.885, -D * 0.05]));
+    createBoxGeometry(0.12, 0.02, 0.08), matDpad, [0, -H * 0.5, -D * 0.05]));
 
   // ─── Side rails ───────────────────────────────────────────────────────────
 
@@ -324,7 +324,7 @@ function buildGBC(): Document {
   // ─── Cartridge slot ───────────────────────────────────────────────────────
 
   root.addChild(addMesh('cartridge_slot',
-    createBoxGeometry(W * 0.55, 0.04, D * 0.25), matCartSlot, [0, H * 0.82, -D * 0.15]));
+    createBoxGeometry(W * 0.55, 0.04, D * 0.25), matCartSlot, [0, H * 0.42, -D * 0.15]));
 
   // ─── Scene ────────────────────────────────────────────────────────────────
 
