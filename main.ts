@@ -79,9 +79,8 @@ function initThree() {
     handleResize();
     window.addEventListener('resize', handleResize);
 
-    // Load appropriate model based on viewport width
-    const initialModel = window.innerWidth <= MOBILE_BP ? '/gbc.glb' : '/gba.glb';
-    loadModel(initialModel);
+    // Always load GBA model
+    loadModel('/gba.glb');
 
     // Apply theme to Three.js objects (lighting)
     applyTheme();
@@ -278,11 +277,11 @@ function handleResize() {
     const isMobile = w <= MOBILE_BP;
 
     if (isMobile) {
-        // On mobile, canvas is 50vh
-        const canvasH = h * 0.5;
+        // On mobile, canvas is 60vh
+        const canvasH = h * 0.6;
         camera.aspect = w / canvasH;
-        camera.fov = 32;
-        camera.position.set(0, 0.5, 5.5);
+        camera.fov = 28;
+        camera.position.set(0, 0.5, 4.8);
         renderer.setSize(w, canvasH, false);
     } else {
         camera.aspect = w / h;
@@ -292,7 +291,7 @@ function handleResize() {
     }
 
     camera.updateProjectionMatrix();
-    if (edgeMat) edgeMat.resolution.set(w, isMobile ? h * 0.5 : h);
+    if (edgeMat) edgeMat.resolution.set(w, isMobile ? h * 0.6 : h);
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════
@@ -383,33 +382,6 @@ if (themeToggle) {
         applyTheme();
     });
 }
-
-// ═══════════════════════════════════════════════════════════════════════════════
-// GBC MODEL SWITCHING
-// ═══════════════════════════════════════════════════════════════════════════════
-
-const mobileMQ = window.matchMedia(`(max-width: ${MOBILE_BP}px)`);
-
-async function switchModelIfNeeded(isMobile: boolean) {
-    const targetPath = isMobile ? '/gbc.glb' : '/gba.glb';
-    if (targetPath === currentModelPath) return;
-
-    // Check if GBC model exists before switching
-    if (isMobile) {
-        try {
-            const res = await fetch('/gbc.glb', { method: 'HEAD' });
-            if (!res.ok) return; // GBC not available, keep GBA
-        } catch {
-            return; // Network error, keep current model
-        }
-    }
-
-    loadModel(targetPath);
-}
-
-mobileMQ.addEventListener('change', (e) => {
-    switchModelIfNeeded(e.matches);
-});
 
 // ═══════════════════════════════════════════════════════════════════════════════
 // INIT

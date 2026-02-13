@@ -722,14 +722,14 @@ body.dark-mode .panel:hover {
     #three-canvas {
         position: relative !important;
         width: 100% !important;
-        height: 50vh !important;
+        height: 60vh !important;
         inset: auto;
     }
 
     #scanlines,
     #dither {
         position: absolute;
-        height: 50vh;
+        height: 60vh;
     }
 
     #overlay {
@@ -767,14 +767,10 @@ body.dark-mode .panel:hover {
         padding: 12px 8px;
     }
 
-    /* --- Floating panels common --- */
+    /* --- Floating panels (SKILLS & LINKS) --- */
     #sidebar-l .panel:first-child,
     #sidebar-r .panel:last-child {
-        position: fixed;
-        z-index: 10;
-        width: auto;
-        min-width: 100px;
-        max-width: 160px;
+        position: relative;
         padding: 10px;
         background: rgba(255, 255, 255, 0.7);
         backdrop-filter: blur(12px);
@@ -783,16 +779,24 @@ body.dark-mode .panel:hover {
         animation: fadeSlideIn 0.4s ease-out backwards;
     }
 
-    /* SKILLS - right side */
+    /* SKILLS panel order */
     #sidebar-l .panel:first-child {
-        right: 8px;
-        top: 56px;
+        order: 1;
     }
 
-    /* LINKS - left side */
+    /* LINKS panel order */
     #sidebar-r .panel:last-child {
-        left: 8px;
-        top: 56px;
+        order: 2;
+    }
+
+    /* CAREER panel order */
+    #sidebar-l .panel:last-child {
+        order: 3;
+    }
+
+    /* PROJECTS panel order */
+    #sidebar-r .panel:first-child {
+        order: 4;
     }
 
     /* --- SKILLS panel compact --- */
@@ -800,14 +804,21 @@ body.dark-mode .panel:hover {
         font-size: 13px;
         margin-bottom: 6px;
     }
-    #sidebar-l .panel:first-child .skill-bar { display: none; }
+    #sidebar-l .panel:first-child .skill-row {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 2px;
+        margin-bottom: 6px;
+    }
     #sidebar-l .panel:first-child .skill-name {
         font-size: 13px;
         min-width: unset;
-        padding: 3px 0;
+        padding: 0;
     }
-    #sidebar-l .panel:first-child .skill-row {
-        margin-bottom: 2px;
+    #sidebar-l .panel:first-child .skill-bar {
+        display: block;
+        width: 100%;
+        flex: none;
     }
     /* Hide 6th skill and beyond */
     #sidebar-l .panel:first-child .skill-row:nth-child(n+6) { display: none; }
@@ -922,11 +933,16 @@ body.dark-mode .panel:hover {
 @media (max-width: 480px) {
     #sidebar-l .panel:first-child,
     #sidebar-r .panel:last-child {
-        max-width: 120px;
         padding: 8px;
     }
 
     .mobile-content {
-        grid-template-columns: 1fr;
+        grid-template-columns: 1fr 1fr;
+    }
+
+    /* CAREER & PROJECTS span full width on small screens */
+    #sidebar-l .panel:last-child,
+    #sidebar-r .panel:first-child {
+        grid-column: 1 / -1;
     }
 }
