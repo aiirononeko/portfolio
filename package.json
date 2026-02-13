@@ -15,6 +15,7 @@
     "typescript": "^5"
   },
   "dependencies": {
+    "@gltf-transform/core": "^4.3.0",
     "@types/three": "^0.182.0",
     "three": "^0.182.0",
     "wrangler": "^4.65.0"
