@@ -1,0 +1,329 @@
+/**
+ * Design Tokens - Simeon Griggs Portfolio Style
+ *
+ * このファイルは、デザインリファレンスに基づいたCSS変数定義です。
+ * プロジェクト全体で一貫したデザインを実現するために使用します。
+ */
+
+:root {
+  /* ========================================
+     カラーシステム - Light Mode
+     ======================================== */
+
+  /* 背景色 */
+  --color-bg-primary: #f5f5f5;
+  --color-bg-secondary: #ffffff;
+  --color-bg-tertiary: #fafafa;
+
+  /* テキスト色 */
+  --color-text-primary: #1a1a1a;
+  --color-text-secondary: #666666;
+  --color-text-tertiary: #999999;
+  --color-text-inverse: #ffffff;
+
+  /* アクセント色 */
+  --color-accent-primary: #3b82f6;
+  --color-accent-hover: #2563eb;
+  --color-accent-active: #1d4ed8;
+
+  /* ボーダー色 */
+  --color-border-light: #e5e5e5;
+  --color-border-medium: #d4d4d4;
+  --color-border-dark: #a3a3a3;
+
+  /* シャドウ色 */
+  --color-shadow: rgba(0, 0, 0, 0.1);
+  --color-shadow-md: rgba(0, 0, 0, 0.15);
+  --color-shadow-lg: rgba(0, 0, 0, 0.2);
+
+  /* ステータス色 */
+  --color-success: #10b981;
+  --color-warning: #f59e0b;
+  --color-error: #ef4444;
+  --color-info: #3b82f6;
+
+  /* ========================================
+     タイポグラフィ
+     ======================================== */
+
+  /* フォントファミリー */
+  --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+               "Helvetica Neue", Arial, "Noto Sans", sans-serif,
+               "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Monaco, Consolas,
+               "Liberation Mono", "Courier New", monospace;
+
+  /* フォントサイズ */
+  --text-xs: 0.75rem;      /* 12px */
+  --text-sm: 0.875rem;     /* 14px */
+  --text-base: 1rem;       /* 16px */
+  --text-lg: 1.125rem;     /* 18px */
+  --text-xl: 1.25rem;      /* 20px */
+  --text-2xl: 1.5rem;      /* 24px */
+  --text-3xl: 1.875rem;    /* 30px */
+  --text-4xl: 2.25rem;     /* 36px */
+  --text-5xl: 3rem;        /* 48px */
+  --text-6xl: 3.75rem;     /* 60px */
+
+  /* フォントウェイト */
+  --font-thin: 100;
+  --font-extralight: 200;
+  --font-light: 300;
+  --font-normal: 400;
+  --font-medium: 500;
+  --font-semibold: 600;
+  --font-bold: 700;
+  --font-extrabold: 800;
+  --font-black: 900;
+
+  /* 行間 */
+  --leading-none: 1;
+  --leading-tight: 1.25;
+  --leading-snug: 1.375;
+  --leading-normal: 1.5;
+  --leading-relaxed: 1.625;
+  --leading-loose: 2;
+
+  /* レターススペーシング */
+  --tracking-tighter: -0.05em;
+  --tracking-tight: -0.025em;
+  --tracking-normal: 0em;
+  --tracking-wide: 0.025em;
+  --tracking-wider: 0.05em;
+  --tracking-widest: 0.1em;
+
+  /* ========================================
+     スペーシングシステム (8pxベース)
+     ======================================== */
+
+  --space-0: 0;
+  --space-1: 0.25rem;    /* 4px */
+  --space-2: 0.5rem;     /* 8px */
+  --space-3: 0.75rem;    /* 12px */
+  --space-4: 1rem;       /* 16px */
+  --space-5: 1.25rem;    /* 20px */
+  --space-6: 1.5rem;     /* 24px */
+  --space-8: 2rem;       /* 32px */
+  --space-10: 2.5rem;    /* 40px */
+  --space-12: 3rem;      /* 48px */
+  --space-16: 4rem;      /* 64px */
+  --space-20: 5rem;      /* 80px */
+  --space-24: 6rem;      /* 96px */
+  --space-32: 8rem;      /* 128px */
+
+  /* ========================================
+     レイアウト
+     ======================================== */
+
+  /* コンテナ */
+  --container-xs: 480px;
+  --container-sm: 640px;
+  --container-md: 768px;
+  --container-lg: 1024px;
+  --container-xl: 1280px;
+  --container-2xl: 1536px;
+  --container-max: 1200px;
+
+  /* ブレイクポイント */
+  --breakpoint-sm: 640px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 1024px;
+  --breakpoint-xl: 1280px;
+  --breakpoint-2xl: 1536px;
+
+  /* ========================================
+     ボーダー・角丸
+     ======================================== */
+
+  --border-width-thin: 1px;
+  --border-width-medium: 2px;
+  --border-width-thick: 4px;
+
+  --radius-none: 0;
+  --radius-sm: 0.25rem;    /* 4px */
+  --radius-base: 0.375rem; /* 6px */
+  --radius-md: 0.5rem;     /* 8px */
+  --radius-lg: 0.75rem;    /* 12px */
+  --radius-xl: 1rem;       /* 16px */
+  --radius-2xl: 1.5rem;    /* 24px */
+  --radius-full: 9999px;   /* 完全な円形 */
+
+  /* ========================================
+     シャドウ
+     ======================================== */
+
+  --shadow-sm: 0 1px 2px 0 var(--color-shadow);
+  --shadow-base: 0 1px 3px 0 var(--color-shadow);
+  --shadow-md: 0 4px 6px -1px var(--color-shadow);
+  --shadow-lg: 0 10px 15px -3px var(--color-shadow);
+  --shadow-xl: 0 20px 25px -5px var(--color-shadow);
+  --shadow-2xl: 0 25px 50px -12px var(--color-shadow-md);
+  --shadow-inner: inset 0 2px 4px 0 var(--color-shadow);
+
+  /* ========================================
+     トランジション
+     ======================================== */
+
+  /* デュレーション */
+  --duration-75: 75ms;
+  --duration-100: 100ms;
+  --duration-150: 150ms;
+  --duration-200: 200ms;
+  --duration-300: 300ms;
+  --duration-500: 500ms;
+  --duration-700: 700ms;
+  --duration-1000: 1000ms;
+
+  /* イージング */
+  --ease-linear: linear;
+  --ease-in: cubic-bezier(0.4, 0, 1, 1);
+  --ease-out: cubic-bezier(0, 0, 0.2, 1);
+  --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* トランジションプリセット */
+  --transition-fast: var(--duration-150) var(--ease-out);
+  --transition-base: var(--duration-200) var(--ease-out);
+  --transition-slow: var(--duration-300) var(--ease-out);
+  --transition-all: all var(--duration-200) var(--ease-out);
+
+  /* ========================================
+     Z-Index
+     ======================================== */
+
+  --z-0: 0;
+  --z-10: 10;
+  --z-20: 20;
+  --z-30: 30;
+  --z-40: 40;
+  --z-50: 50;
+  --z-dropdown: 100;
+  --z-sticky: 200;
+  --z-fixed: 300;
+  --z-modal-backdrop: 400;
+  --z-modal: 500;
+  --z-popover: 600;
+  --z-tooltip: 700;
+
+  /* ========================================
+     その他のデザイントークン
+     ======================================== */
+
+  /* Backdrop Blur */
+  --backdrop-blur-sm: blur(4px);
+  --backdrop-blur-base: blur(8px);
+  --backdrop-blur-md: blur(12px);
+  --backdrop-blur-lg: blur(16px);
+
+  /* Opacity */
+  --opacity-0: 0;
+  --opacity-10: 0.1;
+  --opacity-20: 0.2;
+  --opacity-50: 0.5;
+  --opacity-75: 0.75;
+  --opacity-90: 0.9;
+  --opacity-100: 1;
+}
+
+/* ========================================
+   ダークモード
+   ======================================== */
+
+[data-theme="dark"],
+.dark {
+  /* 背景色 */
+  --color-bg-primary: #0a0a0a;
+  --color-bg-secondary: #1a1a1a;
+  --color-bg-tertiary: #262626;
+
+  /* テキスト色 */
+  --color-text-primary: #f5f5f5;
+  --color-text-secondary: #a3a3a3;
+  --color-text-tertiary: #737373;
+  --color-text-inverse: #1a1a1a;
+
+  /* アクセント色 */
+  --color-accent-primary: #60a5fa;
+  --color-accent-hover: #3b82f6;
+  --color-accent-active: #2563eb;
+
+  /* ボーダー色 */
+  --color-border-light: #262626;
+  --color-border-medium: #404040;
+  --color-border-dark: #525252;
+
+  /* シャドウ色 */
+  --color-shadow: rgba(0, 0, 0, 0.3);
+  --color-shadow-md: rgba(0, 0, 0, 0.4);
+  --color-shadow-lg: rgba(0, 0, 0, 0.5);
+
+  /* ステータス色（ダークモード用に調整） */
+  --color-success: #34d399;
+  --color-warning: #fbbf24;
+  --color-error: #f87171;
+  --color-info: #60a5fa;
+}
+
+/* ========================================
+   Prefers Color Scheme メディアクエリ
+   ======================================== */
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    /* 背景色 */
+    --color-bg-primary: #0a0a0a;
+    --color-bg-secondary: #1a1a1a;
+    --color-bg-tertiary: #262626;
+
+    /* テキスト色 */
+    --color-text-primary: #f5f5f5;
+    --color-text-secondary: #a3a3a3;
+    --color-text-tertiary: #737373;
+    --color-text-inverse: #1a1a1a;
+
+    /* アクセント色 */
+    --color-accent-primary: #60a5fa;
+    --color-accent-hover: #3b82f6;
+    --color-accent-active: #2563eb;
+
+    /* ボーダー色 */
+    --color-border-light: #262626;
+    --color-border-medium: #404040;
+    --color-border-dark: #525252;
+
+    /* シャドウ色 */
+    --color-shadow: rgba(0, 0, 0, 0.3);
+    --color-shadow-md: rgba(0, 0, 0, 0.4);
+    --color-shadow-lg: rgba(0, 0, 0, 0.5);
+  }
+}
+
+/* ========================================
+   ユーティリティクラス
+   ======================================== */
+
+/* テキストスタイル */
+.text-primary { color: var(--color-text-primary); }
+.text-secondary { color: var(--color-text-secondary); }
+.text-tertiary { color: var(--color-text-tertiary); }
+.text-accent { color: var(--color-accent-primary); }
+
+/* 背景色 */
+.bg-primary { background-color: var(--color-bg-primary); }
+.bg-secondary { background-color: var(--color-bg-secondary); }
+.bg-accent { background-color: var(--color-accent-primary); }
+
+/* トランジション */
+.transition { transition: var(--transition-all); }
+.transition-fast { transition: var(--transition-fast); }
+.transition-slow { transition: var(--transition-slow); }
+
+/* シャドウ */
+.shadow { box-shadow: var(--shadow-base); }
+.shadow-md { box-shadow: var(--shadow-md); }
+.shadow-lg { box-shadow: var(--shadow-lg); }
+
+/* 角丸 */
+.rounded { border-radius: var(--radius-base); }
+.rounded-md { border-radius: var(--radius-md); }
+.rounded-lg { border-radius: var(--radius-lg); }
+.rounded-full { border-radius: var(--radius-full); }
