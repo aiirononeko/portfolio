@@ -107,7 +107,7 @@ body {
 
 .loader-title {
     font-family: var(--fp);
-    font-size: 14px;
+    font-size: 20px;
     color: var(--amber);
     letter-spacing: 4px;
     margin-bottom: 24px;
@@ -129,7 +129,7 @@ body {
 
 .loader-text {
     font-family: var(--fp);
-    font-size: 9px;
+    font-size: 12px;
     color: var(--txt);
     letter-spacing: 3px;
     animation: blink 1.2s step-end infinite;
@@ -174,7 +174,7 @@ body {
 }
 
 .exp-label {
-    font-size: 16px;
+    font-size: 36px;
     color: var(--val);
     letter-spacing: 5px;
     text-decoration: none;
@@ -183,12 +183,12 @@ body {
 }
 
 .exp-sep {
-    font-size: 16px;
+    font-size: 20px;
     color: var(--txt);
 }
 
 .exp-type {
-    font-size: 14px;
+    font-size: 20px;
     color: var(--txt-br);
     letter-spacing: 3px;
 }
@@ -228,7 +228,7 @@ body {
 
 .ef-credit {
     font-family: 'Inter', -apple-system, sans-serif;
-    font-size: 12px;
+    font-size: 16px;
     font-weight: 300;
     color: rgba(0, 0, 0, 0.4);
     letter-spacing: 0.5px;
@@ -284,7 +284,7 @@ body {
 
 .ph {
     font-family: var(--fp);
-    font-size: 10px;
+    font-size: 24px;
     color: var(--teal);
     letter-spacing: 0.5px;
     margin-bottom: 4px;
@@ -322,7 +322,7 @@ body {
 }
 
 .pc {
-    font-size: 11px;
+    font-size: 20px;
     line-height: 1.4;
     overflow: hidden;
     flex: 1;
@@ -341,7 +341,7 @@ body {
 }
 
 .skill-name {
-    font-size: 10px;
+    font-size: 16px;
     color: var(--txt);
     min-width: 72px;
     flex-shrink: 0;
@@ -371,20 +371,20 @@ body {
 
 .career-year {
     font-family: var(--fp);
-    font-size: 9px;
+    font-size: 16px;
     color: var(--amber);
     letter-spacing: 1px;
     margin-bottom: 1px;
 }
 
 .career-role {
-    font-size: 11px;
+    font-size: 16px;
     color: var(--val);
     font-weight: 400;
 }
 
 .career-company {
-    font-size: 10px;
+    font-size: 16px;
     color: var(--txt);
 }
 
@@ -406,7 +406,7 @@ body {
 
 .project-name {
     font-family: var(--fp);
-    font-size: 10px;
+    font-size: 16px;
     color: var(--cyan);
     letter-spacing: 1px;
     text-decoration: none;
@@ -421,7 +421,7 @@ body {
 }
 
 .project-desc {
-    font-size: 10px;
+    font-size: 16px;
     color: var(--txt);
     line-height: 1.4;
     margin-bottom: 2px;
@@ -429,7 +429,7 @@ body {
 
 .project-tech {
     font-family: var(--fp);
-    font-size: 8px;
+    font-size: 12px;
     color: var(--dim);
     letter-spacing: 0.5px;
 }
@@ -454,13 +454,13 @@ body {
 }
 
 .link-icon {
-    font-size: 8px;
+    font-size: 12px;
     color: var(--green);
     flex-shrink: 0;
 }
 
 .link-label {
-    font-size: 11px;
+    font-size: 16px;
     letter-spacing: 1px;
 }
 
@@ -475,6 +475,7 @@ body {
 }
 
 @keyframes pulse {
+
     0%,
     100% {
         opacity: 1;
@@ -503,61 +504,62 @@ body {
     }
 
     .ph {
-        font-size: 8px;
+        font-size: 11px;
     }
 
     .pc {
-        font-size: 10px;
+        font-size: 13px;
     }
 
     .exp-label {
-        font-size: 10px;
+        font-size: 14px;
         letter-spacing: 3px;
     }
 
     .exp-type {
-        font-size: 9px;
+        font-size: 12px;
     }
 
     .ef-credit {
-        font-size: 9px;
+        font-size: 12px;
     }
 
     .skill-name {
         min-width: 50px;
-        font-size: 8px;
+        font-size: 11px;
     }
 
     .career-year {
-        font-size: 8px;
+        font-size: 11px;
     }
 
     .career-role {
-        font-size: 9px;
+        font-size: 12px;
     }
 
     .career-company {
-        font-size: 8px;
+        font-size: 11px;
     }
 
     .project-name {
-        font-size: 8px;
+        font-size: 11px;
     }
 
     .project-desc {
-        font-size: 8px;
+        font-size: 11px;
     }
 
     .project-tech {
-        font-size: 7px;
+        font-size: 10px;
     }
 
     .link-label {
-        font-size: 9px;
+        font-size: 12px;
     }
 }
 
 @media (max-width: 768px) {
+
     #sidebar-l,
     #sidebar-r {
         display: none;
