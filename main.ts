@@ -17,8 +17,10 @@ let controls: OrbitControls;
 let model: THREE.Object3D | null = null;
 let edgeMat: LineMaterial;
 let screenMesh: THREE.Mesh | null = null;
+let currentModelPath = '/gba.glb';
 
 const clock = new THREE.Clock();
+const MOBILE_BP = 768;
 
 // ═══════════════════════════════════════════════════════════════════════════════
 // SCENE SETUP
@@ -77,12 +79,30 @@ function initThree() {
 // MODEL LOADING
 // ═══════════════════════════════════════════════════════════════════════════════
 
-function loadModel() {
+function loadModel(modelPath: string = '/gba.glb') {
+    currentModelPath = modelPath;
     const loader = new GLTFLoader();
     const fill = document.querySelector('.loader-fill') as HTMLElement | null;
 
+    // Remove existing model from scene
+    if (model) {
+        scene.remove(model);
+        model.traverse((child) => {
+            if (child instanceof THREE.Mesh) {
+                child.geometry.dispose();
+                if (Array.isArray(child.material)) {
+                    child.material.forEach(m => m.dispose());
+                } else {
+                    child.material.dispose();
+                }
+            }
+        });
+        model = null;
+        screenMesh = null;
+    }
+
     loader.load(
-        '/gba.glb',
+        modelPath,
         (gltf) => {
             model = gltf.scene;
             const box = new THREE.Box3().setFromObject(model);
@@ -237,11 +257,24 @@ function handleResize() {
     const h = window.innerHeight;
     if (!w || !h) return;
 
-    camera.aspect = w / h;
-    camera.updateProjectionMatrix();
-    renderer.setSize(w, h, false);
+    const isMobile = w <= MOBILE_BP;
 
-    if (edgeMat) edgeMat.resolution.set(w, h);
+    if (isMobile) {
+        // On mobile, canvas is 50vh
+        const canvasH = h * 0.5;
+        camera.aspect = w / canvasH;
+        camera.fov = 32;
+        camera.position.set(0, 0.5, 5.5);
+        renderer.setSize(w, canvasH, false);
+    } else {
+        camera.aspect = w / h;
+        camera.fov = 24;
+        camera.position.set(0, 0.5, 4.5);
+        renderer.setSize(w, h, false);
+    }
+
+    camera.updateProjectionMatrix();
+    if (edgeMat) edgeMat.resolution.set(w, isMobile ? h * 0.5 : h);
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════
@@ -295,6 +328,33 @@ if (themeToggle) {
         applyTheme();
     });
 }
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// GBC MODEL SWITCHING (future-ready)
+// ═══════════════════════════════════════════════════════════════════════════════
+
+const mobileMQ = window.matchMedia(`(max-width: ${MOBILE_BP}px)`);
+
+async function switchModelIfNeeded(isMobile: boolean) {
+    const targetPath = isMobile ? '/gbc.glb' : '/gba.glb';
+    if (targetPath === currentModelPath) return;
+
+    // Check if GBC model exists before switching
+    if (isMobile) {
+        try {
+            const res = await fetch('/gbc.glb', { method: 'HEAD' });
+            if (!res.ok) return; // GBC not available, keep GBA
+        } catch {
+            return; // Network error, keep current model
+        }
+    }
+
+    loadModel(targetPath);
+}
+
+mobileMQ.addEventListener('change', (e) => {
+    switchModelIfNeeded(e.matches);
+});
 
 // ═══════════════════════════════════════════════════════════════════════════════
 // INIT

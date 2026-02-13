@@ -322,6 +322,14 @@ body {
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════════
+   MOBILE CONTENT WRAPPER (transparent on desktop)
+   ═══════════════════════════════════════════════════════════════════════════════ */
+
+.mobile-content {
+    display: contents;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════════
    SIDEBARS
    ═══════════════════════════════════════════════════════════════════════════════ */
 
@@ -629,7 +637,7 @@ body.dark-mode .panel:hover {
 
     #sidebar-l,
     #sidebar-r {
-        width: 140px;
+        width: 120px;
     }
 
     .ph {
@@ -694,39 +702,131 @@ body.dark-mode .panel:hover {
 }
 
 @media (max-width: 768px) {
+    html,
+    body {
+        overflow-y: auto;
+        height: auto;
+    }
 
-    #sidebar-l,
-    #sidebar-r {
-        display: none;
+    #three-canvas {
+        position: relative !important;
+        width: 100% !important;
+        height: 50vh !important;
+        inset: auto;
+    }
+
+    #scanlines,
+    #dither {
+        position: absolute;
+        height: 50vh;
+    }
+
+    #overlay {
+        position: relative;
+        inset: auto;
+    }
+
+    #exp-header {
+        position: fixed;
+        left: 16px;
+        right: 16px;
+        top: 0;
+        height: 48px;
+        background: var(--bg);
+        z-index: 100;
     }
 
     #virtual-screen {
         display: none;
     }
 
-    #exp-header {
-        left: 16px;
-        right: 16px;
+    #sidebar-l,
+    #sidebar-r {
+        position: static;
+        width: 100%;
+        padding: 0 16px;
+        gap: 8px;
+    }
+
+    .mobile-content {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        padding: 12px 0;
+    }
+
+    .panel {
+        padding: 12px 14px;
+    }
+
+    .ph {
+        font-size: 16px;
+        margin-bottom: 8px;
+    }
+
+    .pc {
+        font-size: 15px;
+    }
+
+    .skill-name {
+        min-width: 72px;
+        font-size: 14px;
+    }
+
+    .career-year {
+        font-size: 14px;
+    }
+
+    .career-role {
+        font-size: 15px;
+    }
+
+    .career-company {
+        font-size: 14px;
+    }
+
+    .project-name {
+        font-size: 14px;
+    }
+
+    .project-desc {
+        font-size: 14px;
+    }
+
+    .project-tech {
+        font-size: 12px;
+    }
+
+    .link-label {
+        font-size: 15px;
     }
 
     #exp-footer {
-        left: 16px;
-        right: 16px;
+        position: static;
+        height: auto;
+        padding: 16px;
+        justify-content: center;
+    }
+
+    .ef-credit {
+        font-size: 12px;
     }
 
     #theme-toggle,
     #blog-btn {
-        font-size: 8px;
-        padding: 4px 12px;
+        font-size: 10px;
+        padding: 6px 14px;
         letter-spacing: 1px;
     }
 
     .exp-label {
-        font-size: 12px;
+        font-size: 14px;
+        letter-spacing: 2px;
     }
 
+    .exp-sep,
     .exp-type {
-        font-size: 10px;
+        display: none;
     }
 
     .exp-right {
