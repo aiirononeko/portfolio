@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E01.AI / EMULATOR CHALLENGE</title>
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Share+Tech+Mono&family=Inter:wght@300;400&display=swap"
+        rel="stylesheet">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Three.js Import Map -->
+    <script type="importmap">
+    {
+        "imports": {
+            "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+            "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+        }
+    }
+    </script>
+</head>
+
+<body>
+    <!-- ═══════════════════════════════════════════════════════════════════════
+         MOBILE GATE
+         ═══════════════════════════════════════════════════════════════════════ -->
+    <div id="mobile-gate">
+        <div class="mg-header">E01.AI <span class="mg-sep">/</span> EMULATOR CHALLENGE</div>
+        <div class="mg-body">Please open this page on Chrome<br>on your laptop or PC.</div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════════════════
+         LOADER
+         ═══════════════════════════════════════════════════════════════════════ -->
+    <div id="loader">
+        <div class="loader-inner">
+            <div class="loader-title">E01.AI / EMULATOR CHALLENGE</div>
+            <div class="loader-bar">
+                <div class="loader-fill"></div>
+            </div>
+            <div class="loader-text">INITIALIZING...</div>
+        </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════════════════
+         LOAD MASK
+         ═══════════════════════════════════════════════════════════════════════ -->
+    <div id="load-mask" class="hidden">
+        <div class="mask-inner">
+            <div class="mask-text">LOADING ROM...</div>
+        </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════════════════
+         CANVASES & EFFECTS
+         ═══════════════════════════════════════════════════════════════════════ -->
+    <canvas id="three-canvas"></canvas>
+    <canvas id="gba-canvas" width="240" height="160" style="display:none"></canvas>
+
+    <div id="scanlines"></div>
+    <div id="dither"></div>
+
+    <!-- ═══════════════════════════════════════════════════════════════════════
+         MAIN OVERLAY
+         ═══════════════════════════════════════════════════════════════════════ -->
+    <div id="overlay">
+
+        <!-- Header -->
+        <div id="exp-header">
+            <div class="exp-left">
+                <a class="exp-label" href="https://e01.ai" target="_blank">E01.AI</a>
+                <span class="exp-sep">/</span>
+                <span class="exp-type">EMULATOR CHALLENGE - GLM5</span>
+            </div>
+            <div class="exp-right">
+                <button id="hd-toggle" aria-label="Toggle high-DPI mode">HD</button>
+                <a id="article-btn" href="https://blog.e01.ai/glm5-gameboy-and-long-task-era-64db7074a026"
+                    target="_blank">ARTICLE &#x2197;</a>
+                <button id="about-btn" aria-label="About this experiment">WHAT IS THIS?</button>
+            </div>
+        </div>
+
+        <!-- About Panel -->
+        <div id="about-overlay" class="hidden">
+            <div id="about-panel">
+                <button id="about-close">&times;</button>
+                <div class="about-top-row">
+                    <div class="about-title">EMULATOR CHALLENGE - GLM5</div>
+                    <div id="lang-toggle">
+                        <button class="lang-btn active" data-lang="en">EN</button>
+                        <button class="lang-btn" data-lang="cn">CN</button>
+                    </div>
+                </div>
+                <div class="about-body" id="about-en">
+                    <p>E01.ai &middot; 2026</p>
+                    <p>
+                        Before the launch of GLM5, we were invited to test its "long task" capabilities. We designed a
+                        challenge: have GLM5, as a single agent with no parallelism, build a Game Boy Advance emulator
+                        from scratch in JavaScript and embed it in a 3D rendered scene.
+                    </p>
+                    <p>
+                        After 700 tool calls and 800 context switches, with minimal human intervention, the GBA emulator
+                        core was functional &mdash; able to load and run ROMs.
+                    </p>
+                    <p>
+                        This is not faster conversation. It is AI as a continuously running engineering process,
+                        autonomously converging on the goal. Consistency is the foundation of long tasks &mdash; the
+                        700th call must be as reliable as the 1st.
+                    </p>
+                    <p class="about-credit">Emulator challenge designed by E01.ai &middot; Built with GLM5</p>
+                </div>
+                <div class="about-body hidden" id="about-cn">
+                    <p>E01.ai &middot; 2026</p>
+                    <p>
+                        GLM5 发布之前，我们受邀参与测试其「长任务」能力。我们设计了一项挑战：让 GLM5 以单 Agent、无并行的方式，
+                        用 JavaScript 从零实现一个 Game Boy Advance 模拟器，并嵌入 3D 场景渲染。
+                    </p>
+                    <p>
+                        700 次工具调用、800 个上下文切换之后，在极少干预和引导下，GBA 模拟器核心功能实现，可加载并运行 ROM。
+                    </p>
+                    <p>
+                        这不是更快的对话，而是 AI 作为持续运行的工程进程，自主地向目标逼近。
+                        一致性是长任务的根本——第 700 次调用和第 1 次一样可靠。
+                    </p>
+                    <p class="about-credit">模拟器挑战由 E01.ai 设计 · GLM5模型用于实现</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Virtual Screen Container -->
+        <div id="virtual-screen"></div>
+
+        <!-- ─────────────────────────────────────────────────────────────────────
+             LEFT SIDEBAR - Hardware Panels
+             ───────────────────────────────────────────────────────────────────── -->
+        <div id="sidebar-l">
+            <div class="panel" id="p-cpu">
+                <div class="ph"><span class="dot g"></span> CPU REGISTERS</div>
+                <div class="pc" id="pc-cpu"></div>
+            </div>
+            <div class="panel" id="p-flags">
+                <div class="ph"><span class="dot a"></span> FLAGS</div>
+                <div class="pc" id="pc-flags"></div>
+            </div>
+            <div class="panel" id="p-disp">
+                <div class="ph"><span class="dot b"></span> DISPLAY CTRL</div>
+                <div class="pc" id="pc-disp"></div>
+            </div>
+            <div class="panel" id="p-bg">
+                <div class="ph"><span class="dot g"></span> BG CONTROL</div>
+                <div class="pc" id="pc-bg"></div>
+            </div>
+            <div class="panel" id="p-pal">
+                <div class="ph"><span class="dot p"></span> PALETTE</div>
+                <div class="pc" id="pc-pal"></div>
+            </div>
+            <div class="panel" id="p-oam">
+                <div class="ph"><span class="dot a"></span> OAM / SPRITES</div>
+                <div class="pc" id="pc-oam"></div>
+            </div>
+        </div>
+
+        <!-- ─────────────────────────────────────────────────────────────────────
+             RIGHT SIDEBAR - Memory & System Panels
+             ───────────────────────────────────────────────────────────────────── -->
+        <div id="sidebar-r">
+            <div class="panel" id="p-mem">
+                <div class="ph"><span class="dot p"></span> MEMORY MAP</div>
+                <div class="pc" id="pc-mem"></div>
+            </div>
+            <div class="panel" id="p-vram">
+                <div class="ph"><span class="dot b"></span> VRAM STATUS</div>
+                <div class="pc" id="pc-vram"></div>
+            </div>
+            <div class="panel" id="p-dma">
+                <div class="ph"><span class="dot g"></span> DMA CHANNELS</div>
+                <div class="pc" id="pc-dma"></div>
+            </div>
+            <div class="panel" id="p-timer">
+                <div class="ph"><span class="dot a"></span> TIMERS</div>
+                <div class="pc" id="pc-timer"></div>
+            </div>
+            <div class="panel" id="p-irq">
+                <div class="ph"><span class="dot p"></span> INTERRUPTS</div>
+                <div class="pc" id="pc-irq"></div>
+            </div>
+        </div>
+
+        <!-- ─────────────────────────────────────────────────────────────────────
+             ROM & CONTROLS HUD
+             ───────────────────────────────────────────────────────────────────── -->
+        <div id="rom-hud">
+            <span class="lbl-chip" id="rom-name"></span>
+            <div class="rom-row">
+                <label class="rom-btn" for="rom-input">
+                    <svg class="rom-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                        <polyline points="7 10 12 15 17 10" />
+                        <line x1="12" y1="15" x2="12" y2="3" />
+                    </svg>
+                    LOAD FILE
+                </label>
+                <input type="file" id="rom-input" accept=".gba,.bin" hidden>
+                <div class="rom-divider"></div>
+                <select id="rom-select" class="rom-btn rom-sel">
+                    <option value="" disabled selected>STOCK ROMS</option>
+                    <option value="roms/GLOBLINS_MAGDEMO_JAN23.gba">Globlins — Mag Demo</option>
+                </select>
+                <div class="rom-divider"></div>
+                <div class="rom-btn" id="unload-btn" style="display:none">
+                    <svg class="rom-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <line x1="18" y1="6" x2="6" y2="18" />
+                        <line x1="6" y1="6" x2="18" y2="18" />
+                    </svg>
+                    EJECT
+                </div>
+            </div>
+        </div>
+
+        <div id="keys-hud">
+            <div class="kh-row">
+                <span class="kh-key">&#x2190; &#x2191; &#x2192; &#x2193;</span>
+                <span class="kh-lbl">D-Pad</span>
+            </div>
+            <div class="kh-row">
+                <span class="kh-key">Z</span>
+                <span class="kh-lbl">A</span>
+                <span class="kh-key">X</span>
+                <span class="kh-lbl">B</span>
+            </div>
+            <div class="kh-row">
+                <span class="kh-key">ENTER</span>
+                <span class="kh-lbl">Start</span>
+                <span class="kh-key">SHIFT</span>
+                <span class="kh-lbl">Select</span>
+            </div>
+            <div class="kh-row">
+                <span class="kh-key">A</span>
+                <span class="kh-lbl">L</span>
+                <span class="kh-key">S</span>
+                <span class="kh-lbl">R</span>
+            </div>
+        </div>
+
+        <!-- ─────────────────────────────────────────────────────────────────────
+             STATUS & FOOTER
+             ───────────────────────────────────────────────────────────────────── -->
+        <footer id="app-status">
+            <div class="pc" id="pc-status"></div>
+        </footer>
+
+        <div id="exp-footer">
+            <span class="ef-credit">Designed by E01.AI, Made with GLM5</span>
+        </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════════════════
+         SCRIPTS
+         ═══════════════════════════════════════════════════════════════════════ -->
+    <script src="dist/gba.js"></script>
+    <script type="module" src="main.js"></script>
+    <script>
+        document.getElementById('lang-toggle').addEventListener('click', function (e) {
+            var btn = e.target.closest('.lang-btn');
+            if (!btn) return;
+            var lang = btn.dataset.lang;
+            document.querySelectorAll('.lang-btn').forEach(function (b) { b.classList.remove('active'); });
+            btn.classList.add('active');
+            document.getElementById('about-en').classList.toggle('hidden', lang !== 'en');
+            document.getElementById('about-cn').classList.toggle('hidden', lang !== 'cn');
+        });
+    </script>
+    <script defer
+        src="https://static.cloudflareinsights.com/beacon.min.js/vcd15cbe7772f49c399c6a5babf22c1241717689176015"
+        integrity="sha512-ZpsOmlRQV6y907TI0dKBHq9Md29nnaEIPlkf84rnaERnq6zvWvPUqr2ft8M1aS28oN72PdrCzSjY4U6VaAw1EQ=="
+        data-cf-beacon='{"version":"2024.11.0","token":"0088bf38a95f4abf8c68c9b93e2b33a7","r":1,"server_timing":{"name":{"cfCacheStatus":true,"cfEdge":true,"cfExtPri":true,"cfL4":true,"cfOrigin":true,"cfSpeedBrain":true},"location_startswith":null}}'
+        crossorigin="anonymous"></script>
+</body>
+
+</html>

@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RYOTA / PORTFOLIO</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Share+Tech+Mono&family=Inter:wght@300;400&display=swap"
+        rel="stylesheet">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="./style.css">
+
+</head>
+
+<body>
+    <!-- Loader -->
+    <div id="loader">
+        <div class="loader-inner">
+            <div class="loader-title">RYOTA / PORTFOLIO</div>
+            <div class="loader-bar">
+                <div class="loader-fill"></div>
+            </div>
+            <div class="loader-text">INITIALIZING...</div>
+        </div>
+    </div>
+
+    <!-- Three.js Canvas & Effects -->
+    <canvas id="three-canvas"></canvas>
+    <div id="scanlines"></div>
+    <div id="dither"></div>
+
+    <!-- Main Overlay -->
+    <div id="overlay">
+
+        <!-- Header -->
+        <div id="exp-header">
+            <div class="exp-left">
+                <span class="exp-label">RYOTA</span>
+                <span class="exp-sep">/</span>
+                <span class="exp-type">PORTFOLIO</span>
+            </div>
+        </div>
+
+        <!-- Virtual Screen Border -->
+        <div id="virtual-screen"></div>
+
+        <!-- Left Sidebar -->
+        <div id="sidebar-l">
+            <!-- SKILLS Panel -->
+            <div class="panel">
+                <div class="ph"><span class="dot g"></span> SKILLS</div>
+                <div class="pc">
+                    <div class="skill-row">
+                        <span class="skill-name">TypeScript</span>
+                        <div class="skill-bar"><div class="skill-fill" style="width:90%"></div></div>
+                    </div>
+                    <div class="skill-row">
+                        <span class="skill-name">React</span>
+                        <div class="skill-bar"><div class="skill-fill" style="width:85%"></div></div>
+                    </div>
+                    <div class="skill-row">
+                        <span class="skill-name">Next.js</span>
+                        <div class="skill-bar"><div class="skill-fill" style="width:80%"></div></div>
+                    </div>
+                    <div class="skill-row">
+                        <span class="skill-name">Node.js</span>
+                        <div class="skill-bar"><div class="skill-fill" style="width:80%"></div></div>
+                    </div>
+                    <div class="skill-row">
+                        <span class="skill-name">Go</span>
+                        <div class="skill-bar"><div class="skill-fill" style="width:60%"></div></div>
+                    </div>
+                    <div class="skill-row">
+                        <span class="skill-name">AWS</span>
+                        <div class="skill-bar"><div class="skill-fill" style="width:70%"></div></div>
+                    </div>
+                    <div class="skill-row">
+                        <span class="skill-name">Docker</span>
+                        <div class="skill-bar"><div class="skill-fill" style="width:75%"></div></div>
+                    </div>
+                    <div class="skill-row">
+                        <span class="skill-name">PostgreSQL</span>
+                        <div class="skill-bar"><div class="skill-fill" style="width:70%"></div></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CAREER Panel -->
+            <div class="panel">
+                <div class="ph"><span class="dot a"></span> CAREER</div>
+                <div class="pc">
+                    <div class="career-entry">
+                        <div class="career-year">2024 -</div>
+                        <div class="career-role">Senior Engineer</div>
+                        <div class="career-company">Company Name</div>
+                    </div>
+                    <div class="career-entry">
+                        <div class="career-year">2022 - 2024</div>
+                        <div class="career-role">Software Engineer</div>
+                        <div class="career-company">Company Name</div>
+                    </div>
+                    <div class="career-entry">
+                        <div class="career-year">2020 - 2022</div>
+                        <div class="career-role">Junior Engineer</div>
+                        <div class="career-company">Company Name</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Sidebar -->
+        <div id="sidebar-r">
+            <!-- PROJECTS Panel -->
+            <div class="panel">
+                <div class="ph"><span class="dot b"></span> PROJECTS</div>
+                <div class="pc">
+                    <div class="project-entry">
+                        <a class="project-name" href="#" target="_blank">Project Alpha</a>
+                        <div class="project-desc">Full-stack web application built with Next.js and PostgreSQL</div>
+                        <div class="project-tech">TypeScript / React / Next.js</div>
+                    </div>
+                    <div class="project-entry">
+                        <a class="project-name" href="#" target="_blank">Project Beta</a>
+                        <div class="project-desc">Real-time data processing pipeline on AWS</div>
+                        <div class="project-tech">Go / AWS Lambda / DynamoDB</div>
+                    </div>
+                    <div class="project-entry">
+                        <a class="project-name" href="#" target="_blank">Project Gamma</a>
+                        <div class="project-desc">CLI tool for developer productivity</div>
+                        <div class="project-tech">Rust / CLI</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- LINKS Panel -->
+            <div class="panel">
+                <div class="ph"><span class="dot p"></span> LINKS</div>
+                <div class="pc">
+                    <a class="link-row" href="https://github.com/aiirononeko" target="_blank">
+                        <span class="link-icon">&#9654;</span>
+                        <span class="link-label">GitHub</span>
+                    </a>
+                    <a class="link-row" href="https://x.com" target="_blank">
+                        <span class="link-icon">&#9654;</span>
+                        <span class="link-label">X (Twitter)</span>
+                    </a>
+                    <a class="link-row" href="https://zenn.dev" target="_blank">
+                        <span class="link-icon">&#9654;</span>
+                        <span class="link-label">Zenn</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div id="exp-footer">
+            <span class="ef-credit">Built with Bun + Three.js</span>
+        </div>
+    </div>
+
+    <!-- Main Script -->
+    <script type="module" src="./main.ts"></script>
+</body>
+
+</html>

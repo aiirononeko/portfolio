@@ -1,0 +1,579 @@
+:root {
+    --bg: #f4f4f4;
+    --grid-dot: #e0e0e0;
+    --panel-bg: transparent;
+    --border: #d8d8d8;
+    --border-hi: #c8c8c8;
+    --teal: #2a6878;
+    --cyan: #1a6080;
+    --green: #2a7858;
+    --amber: #107090;
+    --pink: #405898;
+    --purple: #485890;
+    --txt: #777;
+    --txt-br: #333;
+    --val: #111;
+    --dim: #aaa;
+    --fp: 'Share Tech Mono', 'Courier New', monospace;
+    --fm: 'Share Tech Mono', 'Courier New', monospace;
+    --vs-top: 72px;
+    --vs-left: 64px;
+    --vs-right: 64px;
+    --vs-bottom: 72px;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html,
+body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background:
+        radial-gradient(circle, var(--grid-dot) 1px, transparent 1px) 0 0 / 24px 24px,
+        #fff;
+    font-family: 'Inter', -apple-system, sans-serif;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════════
+   THREE.JS CANVAS & EFFECTS
+   ═══════════════════════════════════════════════════════════════════════════════ */
+
+#three-canvas {
+    position: fixed;
+    inset: 0;
+    width: 100% !important;
+    height: 100% !important;
+    display: block;
+    z-index: 0;
+}
+
+#scanlines {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    pointer-events: none;
+    background: repeating-linear-gradient(0deg, transparent, transparent 3px,
+            rgba(0, 0, 0, 0.015) 3px, rgba(0, 0, 0, 0.015) 4px);
+}
+
+#dither {
+    position: fixed;
+    inset: 0;
+    z-index: 99;
+    pointer-events: none;
+    background-image:
+        repeating-conic-gradient(rgba(128, 128, 128, 0.012) 0% 25%,
+            transparent 0% 50%);
+    background-size: 4px 4px;
+    mix-blend-mode: overlay;
+    animation: dither-drift 10s linear infinite;
+}
+
+@keyframes dither-drift {
+    to {
+        transform: translate(4px, 4px);
+    }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════════
+   LOADER
+   ═══════════════════════════════════════════════════════════════════════════════ */
+
+#loader {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    background: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.8s, visibility 0.8s;
+}
+
+#loader.hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+.loader-inner {
+    text-align: center;
+}
+
+.loader-title {
+    font-family: var(--fp);
+    font-size: 14px;
+    color: var(--amber);
+    letter-spacing: 4px;
+    margin-bottom: 24px;
+}
+
+.loader-bar {
+    width: 200px;
+    height: 4px;
+    background: #ccc;
+    margin: 0 auto 14px;
+}
+
+.loader-fill {
+    width: 0%;
+    height: 100%;
+    background: var(--amber);
+    transition: width 0.3s;
+}
+
+.loader-text {
+    font-family: var(--fp);
+    font-size: 9px;
+    color: var(--txt);
+    letter-spacing: 3px;
+    animation: blink 1.2s step-end infinite;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════════
+   OVERLAY
+   ═══════════════════════════════════════════════════════════════════════════════ */
+
+#overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 2;
+    pointer-events: none;
+    font-family: var(--fm);
+    color: var(--txt-br);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════════
+   HEADER
+   ═══════════════════════════════════════════════════════════════════════════════ */
+
+#exp-header {
+    position: fixed;
+    top: 0;
+    left: var(--vs-left);
+    right: var(--vs-right);
+    height: var(--vs-top);
+    padding-top: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-family: var(--fp);
+    pointer-events: none;
+    z-index: 10;
+}
+
+.exp-left {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.exp-label {
+    font-size: 16px;
+    color: var(--val);
+    letter-spacing: 5px;
+    text-decoration: none;
+    pointer-events: auto;
+    transition: color 0.2s;
+}
+
+.exp-sep {
+    font-size: 16px;
+    color: var(--txt);
+}
+
+.exp-type {
+    font-size: 14px;
+    color: var(--txt-br);
+    letter-spacing: 3px;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════════
+   VIRTUAL SCREEN
+   ═══════════════════════════════════════════════════════════════════════════════ */
+
+#virtual-screen {
+    position: fixed;
+    top: var(--vs-top);
+    left: var(--vs-left);
+    right: var(--vs-right);
+    bottom: var(--vs-bottom);
+    pointer-events: none;
+    z-index: 2;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════════
+   FOOTER
+   ═══════════════════════════════════════════════════════════════════════════════ */
+
+#exp-footer {
+    position: fixed;
+    bottom: 0;
+    left: var(--vs-left);
+    right: var(--vs-right);
+    height: var(--vs-bottom);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-family: var(--fp);
+    pointer-events: none;
+    z-index: 4;
+}
+
+.ef-credit {
+    font-family: 'Inter', -apple-system, sans-serif;
+    font-size: 12px;
+    font-weight: 300;
+    color: rgba(0, 0, 0, 0.4);
+    letter-spacing: 0.5px;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════════
+   SIDEBARS
+   ═══════════════════════════════════════════════════════════════════════════════ */
+
+#sidebar-l,
+#sidebar-r {
+    position: fixed;
+    top: calc(var(--vs-top) + 6px);
+    bottom: calc(var(--vs-bottom) + 6px);
+    width: 210px;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    scrollbar-width: none;
+    pointer-events: auto;
+    z-index: 5;
+}
+
+#sidebar-l::-webkit-scrollbar,
+#sidebar-r::-webkit-scrollbar {
+    display: none;
+}
+
+#sidebar-l {
+    left: calc(var(--vs-left) + 6px);
+}
+
+#sidebar-r {
+    right: calc(var(--vs-right) + 6px);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════════
+   PANELS
+   ═══════════════════════════════════════════════════════════════════════════════ */
+
+.panel {
+    background: var(--panel-bg);
+    padding: 6px 8px;
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+    border: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.ph {
+    font-family: var(--fp);
+    font-size: 10px;
+    color: var(--teal);
+    letter-spacing: 0.5px;
+    margin-bottom: 4px;
+    padding-bottom: 3px;
+    white-space: nowrap;
+    overflow: hidden;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.dot {
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    animation: pulse 2.5s ease-in-out infinite;
+}
+
+.dot.g {
+    background: var(--green);
+}
+
+.dot.b {
+    background: var(--cyan);
+}
+
+.dot.a {
+    background: var(--amber);
+}
+
+.dot.p {
+    background: var(--pink);
+}
+
+.pc {
+    font-size: 11px;
+    line-height: 1.4;
+    overflow: hidden;
+    flex: 1;
+    color: var(--txt-br);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════════
+   SKILLS
+   ═══════════════════════════════════════════════════════════════════════════════ */
+
+.skill-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 4px;
+}
+
+.skill-name {
+    font-size: 10px;
+    color: var(--txt);
+    min-width: 72px;
+    flex-shrink: 0;
+}
+
+.skill-bar {
+    flex: 1;
+    height: 4px;
+    background: var(--dim);
+}
+
+.skill-fill {
+    height: 100%;
+    background: var(--green);
+    transition: width 0.8s;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════════
+   CAREER
+   ═══════════════════════════════════════════════════════════════════════════════ */
+
+.career-entry {
+    margin-bottom: 8px;
+    padding-left: 8px;
+    border-left: 2px solid var(--amber);
+}
+
+.career-year {
+    font-family: var(--fp);
+    font-size: 9px;
+    color: var(--amber);
+    letter-spacing: 1px;
+    margin-bottom: 1px;
+}
+
+.career-role {
+    font-size: 11px;
+    color: var(--val);
+    font-weight: 400;
+}
+
+.career-company {
+    font-size: 10px;
+    color: var(--txt);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════════
+   PROJECTS
+   ═══════════════════════════════════════════════════════════════════════════════ */
+
+.project-entry {
+    margin-bottom: 8px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+}
+
+.project-entry:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+.project-name {
+    font-family: var(--fp);
+    font-size: 10px;
+    color: var(--cyan);
+    letter-spacing: 1px;
+    text-decoration: none;
+    pointer-events: auto;
+    transition: color 0.2s;
+    display: block;
+    margin-bottom: 2px;
+}
+
+.project-name:hover {
+    color: var(--amber);
+}
+
+.project-desc {
+    font-size: 10px;
+    color: var(--txt);
+    line-height: 1.4;
+    margin-bottom: 2px;
+}
+
+.project-tech {
+    font-family: var(--fp);
+    font-size: 8px;
+    color: var(--dim);
+    letter-spacing: 0.5px;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════════
+   LINKS
+   ═══════════════════════════════════════════════════════════════════════════════ */
+
+.link-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 0;
+    text-decoration: none;
+    pointer-events: auto;
+    transition: color 0.2s;
+    color: var(--txt-br);
+}
+
+.link-row:hover {
+    color: var(--amber);
+}
+
+.link-icon {
+    font-size: 8px;
+    color: var(--green);
+    flex-shrink: 0;
+}
+
+.link-label {
+    font-size: 11px;
+    letter-spacing: 1px;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════════
+   ANIMATIONS
+   ═══════════════════════════════════════════════════════════════════════════════ */
+
+@keyframes blink {
+    50% {
+        opacity: 0;
+    }
+}
+
+@keyframes pulse {
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.35;
+    }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════════
+   RESPONSIVE
+   ═══════════════════════════════════════════════════════════════════════════════ */
+
+@media (max-width: 1000px) {
+    :root {
+        --vs-top: 40px;
+        --vs-left: 16px;
+        --vs-right: 16px;
+        --vs-bottom: 40px;
+    }
+
+    #sidebar-l,
+    #sidebar-r {
+        width: 140px;
+    }
+
+    .ph {
+        font-size: 8px;
+    }
+
+    .pc {
+        font-size: 10px;
+    }
+
+    .exp-label {
+        font-size: 10px;
+        letter-spacing: 3px;
+    }
+
+    .exp-type {
+        font-size: 9px;
+    }
+
+    .ef-credit {
+        font-size: 9px;
+    }
+
+    .skill-name {
+        min-width: 50px;
+        font-size: 8px;
+    }
+
+    .career-year {
+        font-size: 8px;
+    }
+
+    .career-role {
+        font-size: 9px;
+    }
+
+    .career-company {
+        font-size: 8px;
+    }
+
+    .project-name {
+        font-size: 8px;
+    }
+
+    .project-desc {
+        font-size: 8px;
+    }
+
+    .project-tech {
+        font-size: 7px;
+    }
+
+    .link-label {
+        font-size: 9px;
+    }
+}
+
+@media (max-width: 768px) {
+    #sidebar-l,
+    #sidebar-r {
+        display: none;
+    }
+
+    #virtual-screen {
+        display: none;
+    }
+
+    #exp-header {
+        left: 16px;
+        right: 16px;
+    }
+
+    #exp-footer {
+        left: 16px;
+        right: 16px;
+    }
+}

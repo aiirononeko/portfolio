@@ -1,0 +1,22 @@
+{
+  "name": "portfolio",
+  "module": "index.ts",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "dev": "bun --hot ./index.ts",
+    "build": "bun build ./index.html --outdir ./dist",
+    "deploy": "bunx wrangler deploy"
+  },
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  },
+  "dependencies": {
+    "@types/three": "^0.182.0",
+    "three": "^0.182.0",
+    "wrangler": "^4.65.0"
+  }
+}
