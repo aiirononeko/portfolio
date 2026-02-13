@@ -71,8 +71,9 @@ function initThree() {
     handleResize();
     window.addEventListener('resize', handleResize);
 
-    // Load GBA model
-    loadModel();
+    // Load appropriate model based on viewport width
+    const initialModel = window.innerWidth <= MOBILE_BP ? '/gbc.glb' : '/gba.glb';
+    loadModel(initialModel);
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════
@@ -330,7 +331,7 @@ if (themeToggle) {
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════
-// GBC MODEL SWITCHING (future-ready)
+// GBC MODEL SWITCHING
 // ═══════════════════════════════════════════════════════════════════════════════
 
 const mobileMQ = window.matchMedia(`(max-width: ${MOBILE_BP}px)`);
