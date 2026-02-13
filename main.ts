@@ -18,6 +18,13 @@ let model: THREE.Object3D | null = null;
 let edgeMat: LineMaterial;
 let screenMesh: THREE.Mesh | null = null;
 let currentModelPath = '/gba.glb';
+let bodyShell: THREE.MeshPhysicalMaterial | null = null;
+let bodyMid: THREE.MeshPhysicalMaterial | null = null;
+let bodyDetail: THREE.MeshPhysicalMaterial | null = null;
+let screenMat: THREE.MeshPhysicalMaterial | null = null;
+let ambientLight: THREE.AmbientLight | null = null;
+let keyLight: THREE.DirectionalLight | null = null;
+let fillLight: THREE.DirectionalLight | null = null;
 
 const clock = new THREE.Clock();
 const MOBILE_BP = 768;
@@ -58,13 +65,14 @@ function initThree() {
     controls.maxPolarAngle = Math.PI * 0.62;
 
     // Lighting
-    scene.add(new THREE.AmbientLight(0x405570, 2.0));
+    ambientLight = new THREE.AmbientLight(0x405570, 2.0);
+    scene.add(ambientLight);
 
-    const keyLight = new THREE.DirectionalLight(0xc0d8f0, 2.5);
+    keyLight = new THREE.DirectionalLight(0xc0d8f0, 2.5);
     keyLight.position.set(3, 5, 6);
     scene.add(keyLight);
 
-    const fillLight = new THREE.DirectionalLight(0x90a8c8, 1.5);
+    fillLight = new THREE.DirectionalLight(0x90a8c8, 1.5);
     fillLight.position.set(-4, 2, 4);
     scene.add(fillLight);
 
@@ -74,6 +82,9 @@ function initThree() {
     // Load appropriate model based on viewport width
     const initialModel = window.innerWidth <= MOBILE_BP ? '/gbc.glb' : '/gba.glb';
     loadModel(initialModel);
+
+    // Apply theme to Three.js objects (lighting)
+    applyTheme();
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════
@@ -141,21 +152,21 @@ function loadModel(modelPath: string = '/gba.glb') {
                 });
             }
 
-            const bodyShell = makeBodyMat();
-            const bodyMid = makeBodyMat({
+            bodyShell = makeBodyMat();
+            bodyMid = makeBodyMat({
                 color: 0x858590,
                 roughness: 0.25,
                 opacity: 0.30,
                 clearcoat: 0.5,
             });
-            const bodyDetail = makeBodyMat({
+            bodyDetail = makeBodyMat({
                 color: 0x9a9aa0,
                 roughness: 0.5,
                 opacity: 0.42,
                 metalness: 0.18,
             });
 
-            const screenMat = new THREE.MeshPhysicalMaterial({
+            screenMat = new THREE.MeshPhysicalMaterial({
                 color: 0x1a1a1a,
                 metalness: 0.0,
                 roughness: 0.09,
@@ -210,8 +221,8 @@ function loadModel(modelPath: string = '/gba.glb') {
             const t2 = Math.ceil(bodyParts.length * 2 / 3);
 
             bodyParts.forEach((p, i) => {
-                p.mesh.material = i < t1 ? bodyShell :
-                    i < t2 ? bodyMid : bodyDetail;
+                p.mesh.material = i < t1 ? bodyShell! :
+                    i < t2 ? bodyMid! : bodyDetail!;
             });
 
             scene.add(model);
@@ -235,6 +246,9 @@ function loadModel(modelPath: string = '/gba.glb') {
 
                 child.parent!.add(line);
             });
+
+            // Apply current theme to newly created materials
+            applyTheme();
 
             // Fade out loader
             if (fill) fill.style.width = '100%';
@@ -315,6 +329,43 @@ function applyTheme() {
         document.body.classList.remove('dark-mode');
         themeToggle.textContent = 'DARK';
         themeToggle.classList.remove('active');
+    }
+
+    // Update Three.js materials and lighting for theme
+    if (!ambientLight) return; // Three.js not initialized yet
+
+    if (isDarkMode) {
+        // Edge lines: brighter and more opaque
+        if (edgeMat) {
+            edgeMat.color.set(0xaaaaaa);
+            edgeMat.opacity = 0.5;
+        }
+        // Body materials: increase opacity
+        if (bodyShell) bodyShell.opacity = 0.08;
+        if (bodyMid) bodyMid.opacity = 0.50;
+        if (bodyDetail) bodyDetail.opacity = 0.60;
+        // Lighting: increase intensity
+        ambientLight.intensity = 3.0;
+        if (keyLight) keyLight.intensity = 3.5;
+        if (fillLight) fillLight.intensity = 2.5;
+        // Screen: brighter emissive
+        if (screenMat) screenMat.emissiveIntensity = 0.4;
+    } else {
+        // Edge lines: original values
+        if (edgeMat) {
+            edgeMat.color.set(0x222222);
+            edgeMat.opacity = 0.25;
+        }
+        // Body materials: original opacity
+        if (bodyShell) bodyShell.opacity = 0.03;
+        if (bodyMid) bodyMid.opacity = 0.30;
+        if (bodyDetail) bodyDetail.opacity = 0.42;
+        // Lighting: original intensity
+        ambientLight.intensity = 2.0;
+        if (keyLight) keyLight.intensity = 2.5;
+        if (fillLight) fillLight.intensity = 1.5;
+        // Screen: original emissive
+        if (screenMat) screenMat.emissiveIntensity = 0.15;
     }
 }
 
